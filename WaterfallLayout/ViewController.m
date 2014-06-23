@@ -138,20 +138,15 @@
     [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 4, 6 )]];
     [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 4, 4 )]];
     [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 8, 4 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 4, 4 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 4, 4 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 2, 2 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 2, 2 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 2, 2 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 2, 2 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 1, 1 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 1, 1 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 1, 1 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 1, 1 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 1, 1 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 1, 1 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 1, 1 )]];
-    [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 1, 1 )]];
+    
+    for (int i=0;i<2;i++)
+        [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 4, 4 )]];
+
+    for (int i=0;i<4;i++)
+        [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 2, 2 )]];
+    
+    for (int i=0;i<8;i++)
+        [sizeList addObject:[NSValue valueWithCGSize:CGSizeMake( 1, 1 )]];
     
     mWaterfallLayout= [[WaterfallLayout alloc] initWithSizeList:sizeList numColumns:8 isPortrait:mIsPortrait];
     
