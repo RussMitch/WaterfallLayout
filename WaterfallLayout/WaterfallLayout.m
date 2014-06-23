@@ -49,7 +49,7 @@
     if (!(self = [super init]))
         return nil;
     
-    // numColumns is the same for both orientations!
+    // numColumns (once initialized) is the same for both orientations!
     
     self.numColumns= numColumns;
 
@@ -87,7 +87,7 @@
 // kX0 contains half the slop created by layouts that do not divide evenly.
 // i.e. 1024 / 12 = 85.3, rounding down to 85, 85 * 12 = 1020, which leaves
 // a 4 pixel slop.  We divide the slop by 2, and split it between the left
-// and right edges, hence for the 12 column layout, xK0 equals 2.
+// and right edges, hence for the 12 column layout, kX0 equals 2.
 
 #define kX0 (isPortrait)?((mPortraitScreenWidth-(self.numColumns*self.portraitCellSize))/2):((mLandscapeScreenWidth-(self.numColumns*self.landscapeCellSize))/2)
 
@@ -120,7 +120,7 @@
         
         float maxX= (isPortrait)?(mPortraitScreenWidth-xOffset):(mLandscapeScreenWidth-xOffset);
 
-        // if new frame extends beyond the width of the screen, then move to the next row
+        // if the new frame extends beyond the width of the screen, then move to the next row
         
         if ((x+width)>maxX)
             x= kX0;
@@ -133,6 +133,10 @@
         // intesects with a previous frame, then we move this frame below the intersected frame by
         // adjusting the y offset appropriately.  The x offset will remain the same.
         
+        // NOTE, there is plenty of room for improvement here.  We shouldnt' need to start at the top
+        // for each new frame.  We should be able to start somewhere after the last complete row.
+        // Somewhere would need to be based on the minimum height of all items in the last complete row.
+        
         for (NSValue *value=[self intersectsWith:frame];value!=nil;value=[self intersectsWith:frame]) {
             CGRect rect= [value CGRectValue];
             y= rect.origin.y + rect.size.height;
@@ -142,6 +146,8 @@
         [self.frameList addObject:[NSValue valueWithCGRect:frame]];
         
         x+= width;
+        
+        // when we reach the end of the screen, move to the next row
         
         if (x>=maxX) {
             x= kX0;
@@ -183,7 +189,11 @@
         
         UICollectionViewLayoutAttributes *attribute= [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         
+        // all we're really doin here is using the pre-computed frame for the current orientation
+        
         attribute.frame = [self.frameList[i] CGRectValue];
+        
+        // and computing maxY
         
         if ((attribute.frame.origin.y + attribute.frame.size.height) > mMaxY)
             mMaxY= attribute.frame.origin.y + attribute.frame.size.height;

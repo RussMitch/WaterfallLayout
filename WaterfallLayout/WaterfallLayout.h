@@ -27,18 +27,19 @@
 //
 //  The WaterfallLayout class is a concrete layout object that organizes items
 //  into a waterfall based grid system.  The grid system is based on a fixed
-//  number of columns for both orientations and the width of the associated
-//  UICollectionView is assumed to be the full screen width of the device,
-//  i.e. 768 or 1024 for the iPad and 320 or 480 for the iPhone. Since the
+//  number of columns (once initialized) for both orientations. The width of the
+//  associated UICollectionView is assumed to be the full screen width of the
+//  device, i.e. 768/1024 for the iPad and 320/480 for the iPhone. Since the
 //  column count is the same, the cell size will change based on the orientation.
 //
 //  Item width is based on the column count and can be anything between 1..n,
 //  where n = column count.
 //
-//  Item height is also based on column count, amd cam be anthing greater than 1.
+//  Item height is also based on column count, and can be anthing greater than 1.
 //
-//  For example, using a 12 column layout, the following example can easily be
-//  defined as follows:
+//  For example, the following 12 column layout can easily be created by defining
+//  the layout in terms of an array of CGSizes, and initializing the object with
+//  the array and the column count, as follows:
 //
 //  +-----+-----+-----+
 //  | 4x4 | 4x6 | 4x4 |
@@ -61,7 +62,7 @@
 //
 //  WaterfallLayout *waterfallLayout= [[WaterfallLayout alloc] initWithSizeList:sizeList numColumns:12 isPortrait:YES];
 //
-//  Note that for the above 12 column layout, the minimum item width for each orientation would be:
+//  Note that for the above 12 column layout, the minimum iPad item width for each orientation would be:
 //
 //  Portrait  : 768 / 12 = 64px
 //  Landscape : 1024 / 12 = 85.3 or 85px (rounding down)
